@@ -26,3 +26,7 @@ export function addDaysToDate(startDate, daysToAdd) {
     const newYear = date.getFullYear();
     return `${newDay}/${newMonth}/${newYear}`;
 }
+
+export function generateUniqueId() {
+    return Date.now().toString(36) + Math.random().toString(36).substr(2, 9);
+}

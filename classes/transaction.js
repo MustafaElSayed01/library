@@ -1,6 +1,7 @@
 import bookClasses from '../classes/book.js';
 const { Book, BookManagement } = bookClasses;
 import { users, books, transactions } from '../database/data.js';
+import Customer from './customer.js';
 
 
 function getCurrentDate() {
@@ -34,10 +35,10 @@ function addDaysToDate(startDate, daysToAdd) {
 
 
 class Transaction {
-    constructor(librarian, member, issuedBooks, startDate, days, endDate) {
+    constructor(librarian, customer, issuedBooks, startDate, days, endDate) {
         this.orderID = getCurrentDateTime();
         this.librarian = librarian;
-        this.member = member;
+        this.customer = customer;
         this.issuedBooks = issuedBooks;
         this.days = days;
         this.startDate = startDate;
@@ -61,12 +62,12 @@ class Transaction {
         this.librarian = librarian;
     }
 
-    getMember() {
-        return this.member;
+    getCustomer() {
+        return this.customer;
     }
 
-    setMember(member) {
-        this.member = member;
+    setCustomer(customer) {
+        this.customer = customer;
     }
 
     getissuedBooks() {
@@ -122,21 +123,18 @@ class Transaction {
         for (let i = 0; i < this.issuedBooks.length; i++) {
             total += this.issuedBooks[i].price * 0.10 * this.days[i];
         }
-        return total;
+        return parseFloat(total.toFixed(2));
     }
 }
 
 class TransactionManagement {
-    createTransaction(librarianId, memberId, bookId, days) {
+    createTransaction(librarianId, customerId, bookId, days) {
         const librarian = users.find((librarian) => librarian.id === librarianId);
-        const member = users.find((member) => member.id === memberId);
+        const customer = users.find((customer) => customer.id === customerId);
         const selectedBooks = books.filter((book) => bookId.includes(book.id));
         const date = getCurrentDate();
-        const dueDate = [];
-        days.forEach(day => {
-            dueDate.push(addDaysToDate(date, day))
-        });
-        const transaction = new Transaction(librarian, member, selectedBooks, date, days, dueDate);
+        const dueDate = days.map(day => addDaysToDate(date, day));
+        const transaction = new Transaction(librarian, customer, selectedBooks, date, days, dueDate);
         transactions.push(transaction);
         const bookManagement = new BookManagement();
         bookManagement.takeBook(selectedBooks)

@@ -1,28 +1,50 @@
-// import { users, books } from '../database/data.js'
+import userClasses from './user.js';
+const { User, UserManagement } = userClasses;
+import { users, books } from '../database/data.js'
 
-class Librarian {
-    // Private constructor
-    constructor(name, password) {
-        this.name = name;
-        this.password = password;
+class Librarian extends User {
+    constructor(id, name, password, salary) {
+        super(name, password)
+        this.id = id;
+        this.role = 'Librarian';
+        this.salary = salary;
     }
 
-    getName() {
+    #getName() {
         return this.name;
     }
-
-    setName(name) {
-        this.name = name;
-    }
-
-    getPassword() {
+    #getPassword() {
         return this.password;
     }
-
-    setPassword(password) {
-        this.password = password;
+    #getSalary() {
+        return this.salary;
+    }
+    #getRole() {
+        return this.role;
     }
 
+    #setName(name) {
+        this.name = name;
+    }
+    #setPassword(password) {
+        this.password = password;
+    }
+    setSalary(salary) {
+        this.salary = salary;
+    }
+    #setRole(role) {
+        this.role = role;
+    }
 }
 
-export default Librarian;
+class LibrarianManagement{
+    // retriveLibrarian(id) {
+    //     const librarian = users.find((lib) => lib.id === id);
+    //     if (librarian && librarian.role === 'Librarian') {
+    //         return librarian;
+    //     } else {
+    //     }
+    // }
+}
+
+export default { Librarian, LibrarianManagement };

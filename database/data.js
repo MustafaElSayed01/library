@@ -2,22 +2,25 @@ const users = [
     {
         id: 1,
         name: "Librarian 1",
-        role: "Librarian"
+        password:"Password",
+        role: "Librarian",
+        salary: 3000
     },
     {
         id: 2,
         name: "Librarian 2",
-        role: "Librarian"
+        password:"Password",
+        role: "Librarian",
+        salary: 2500
     },
-    {
-        id: 3,
-        name: "Member 1",
-        role: "Member"
-    },
+
     {
         id: 4,
-        name: "Member 2",
-        role: "Member"
+        name: "Customer 2",
+        password:"Password",
+        role: "Customer",
+        issuedBooks: 0,
+        totalPaid:0
     }
 ];
 
