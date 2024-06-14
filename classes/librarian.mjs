@@ -1,6 +1,6 @@
-import userClasses from './user.js';
+import userClasses from './user.mjs';
 const { User, UserManagement } = userClasses;
-import { users, books } from '../database/data.js'
+import { users, books } from '../database/data.mjs'
 
 class Librarian extends User {
     constructor(id, name, password, salary) {

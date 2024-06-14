@@ -1,9 +1,9 @@
-import userClasses from './user.js';
+import userClasses from './user.mjs';
 const { User, UserManagement } = userClasses;
-import { users } from '../database/data.js'
-import librarianClasses from './librarian.js';
+import { users } from '../database/data.mjs'
+import librarianClasses from './librarian.mjs';
 const { Librarian, LibrarianManagement } = librarianClasses;
-import Customer from './customer.js';
+import Customer from './customer.mjs';
 
 class Admin extends User {
     constructor(name, password) {
@@ -48,7 +48,9 @@ class AdminManagement{
     // }
 
     insertUser(user) {
-        users.push(user);
+        user.forEach(userObj => {
+            users.push(userObj)
+        });
     }
     retriveUser(userd){
         return users.find((user) => user.id === userd.id )

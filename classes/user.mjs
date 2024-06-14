@@ -1,4 +1,4 @@
-import { users } from "../database/data.js";
+import { users } from "../database/data.mjs";
 
 class User {
     constructor(name, password) {

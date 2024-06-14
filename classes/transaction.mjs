@@ -1,7 +1,6 @@
-import bookClasses from '../classes/book.js';
+import bookClasses from './book.mjs';
 const { Book, BookManagement } = bookClasses;
-import { users, books, transactions } from '../database/data.js';
-import Customer from './customer.js';
+import { users, books, transactions } from '../database/data.mjs';
 
 
 function getCurrentDate() {
@@ -137,7 +136,7 @@ class TransactionManagement {
         const transaction = new Transaction(librarian, customer, selectedBooks, date, days, dueDate);
         transactions.push(transaction);
         const bookManagement = new BookManagement();
-        bookManagement.takeBook(selectedBooks)
+        bookManagement.takeBooks(selectedBooks);
     }
     retriveTransaction(transactionId) {
         const transaction =  transactions.find((transaction) => transaction.orderID === transactionId);
