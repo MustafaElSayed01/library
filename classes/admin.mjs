@@ -15,7 +15,7 @@ class Admin extends User {
     #setPassword(password) {
         this.password = password;
     }
-    #getName() {
+    #getName() {    
         return this.name;
     }
     #getPassword() {
@@ -30,7 +30,6 @@ class Admin extends User {
     }
     createCustomer(id, name, password) {
         return new Customer(id, name, password);
-        
     }
 }
 

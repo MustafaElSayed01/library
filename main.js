@@ -39,6 +39,7 @@ const librarian_three = admin.createLibrarian(3,"Librarian 3","Password",3800);
 const customer_one = admin.createCustomer(4,"Customer 1","Password");
 const customer_two = admin.createCustomer(5,"Customer 2","Password");
 const customer_three = admin.createCustomer(6,"Customer 3","Password");
+// admin.editSalary(librarian_one,5000);
 const adminManage = new AdminManagement();
 const userObjects = [librarian_one,librarian_two,librarian_three,customer_one,customer_two,customer_three]
 adminManage.insertUser(userObjects);

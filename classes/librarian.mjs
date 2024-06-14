@@ -45,6 +45,8 @@ class LibrarianManagement{
     //     } else {
     //     }
     // }
+    // check role
+    // edit salary
 }
 
 export default { Librarian, LibrarianManagement };
