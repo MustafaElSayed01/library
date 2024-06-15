@@ -1,52 +1,58 @@
 import userClasses from './user.mjs';
 const { User, UserManagement } = userClasses;
-import { users, books } from '../database/data.mjs'
+import { users } from '../database/data.mjs';
 
 class Librarian extends User {
     constructor(id, name, password, salary) {
-        super(name, password)
-        this.id = id;
+        super(id, name, password)
         this.role = 'Librarian';
         this.salary = salary;
     }
 
-    #getName() {
-        return this.name;
-    }
-    #getPassword() {
-        return this.password;
-    }
-    #getSalary() {
+    getSalary() {
         return this.salary;
     }
-    #getRole() {
+    getRole() {
         return this.role;
-    }
-
-    #setName(name) {
-        this.name = name;
-    }
-    #setPassword(password) {
-        this.password = password;
     }
     setSalary(salary) {
         this.salary = salary;
     }
-    #setRole(role) {
-        this.role = role;
-    }
 }
 
-class LibrarianManagement{
-    // retriveLibrarian(id) {
-    //     const librarian = users.find((lib) => lib.id === id);
-    //     if (librarian && librarian.role === 'Librarian') {
-    //         return librarian;
-    //     } else {
-    //     }
-    // }
-    // check role
-    // edit salary
+class LibrarianManagement {
+    createLibrarian(user, libObj) {
+        if (user.role !== 'Admin') {
+            throw new Error('Only Admin can perform this action');
+        } else {
+            const dup = users.find((user) => user.id === libObj.id);
+            if (!dup) {
+                const newLibrarian = new Librarian(libObj.id, libObj.name, libObj.password, libObj.salary)
+                users.push(newLibrarian);
+            } else {
+                throw new Error('Customer already exists');
+            }
+        }
+    }
+
+    retriveLibrarian(id) {
+        const librarian = users.find((lib) => lib.id === id);
+        if (librarian && librarian.role === 'Librarian') {
+            return librarian;
+        } else {
+            throw new Error('Invalid ID');
+        }
+    }
+
+    editSalary(user, libraryId, salary) {
+        if (user.role !== 'Admin') {
+            throw new Error('Only Admin can perform this action');
+        } else {
+            const librarian = this.retriveLibrarian(libraryId);
+            librarian.setSalary(salary);
+        }
+    }
+
 }
 
 export default { Librarian, LibrarianManagement };

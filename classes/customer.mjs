@@ -1,47 +1,17 @@
 import userClasses from './user.mjs';
 const { User, UserManagement } = userClasses;
-import { transactions } from "../database/data.mjs";
+import { users } from '../database/data.mjs';
 
 class Customer extends User {
     constructor(id, name, password) {
-        super(name, password)
-        this.id = id;
+        super(id, name, password)
         this.role = 'Customer';
-        // this.issuedBooks = 0;
-        // this.totalPaid = 0;
     }
 
-    #getName() {
-        return this.name;
-    }
-    #getPassword() {
-        return this.password;
-    }
-    #getRole() {
+    getRole() {
         return this.role;
     }
-    #getIssuedBooks() {
-        return this.issuedBooks;
-    }
-    #getTotalPaid() {
-        return this.totalPaid;
-    }
 
-    #setName(name) {
-        this.name = name;
-    }
-    #setPassword(password) {
-        this.password = password;
-    }
-    #setRole(role) {
-        this.role = role;
-    }
-    #setIssuedBooks(issuedBooks) {
-        this.issuedBooks = issuedBooks;
-    }
-    #setTotalPaid(totalPaid) {
-        this.totalPaid = totalPaid;
-    }
 
     // calculcateIssuedBooks() {
     //     const books = [];
@@ -59,4 +29,29 @@ class Customer extends User {
     //     return this.totalPaid;
     // }
 }
-export default Customer
+
+class CustomerManagement {
+    createCustomer(user, customerObj) {
+        if (user.role !== 'Admin') {
+            throw new Error('Only Admin can perform this action');
+        } else {
+            const dup = users.find((user) => user.id === customerObj.id);
+            if (!dup) {
+                const newCustomer = new Customer(customerObj.id, customerObj.name, customerObj.password)
+                users.push(newCustomer);
+            } else {
+                throw new Error('Customer already exists');
+            }
+        }
+    }
+    retriveCustomer(id) {
+        const customer = users.find((cus) => cus.id === id);
+        if (customer && customer.role === 'Customer') {
+            return customer;
+        } else {
+            throw new Error('Invalid ID');
+        }
+    }
+
+}
+export default { Customer, CustomerManagement }

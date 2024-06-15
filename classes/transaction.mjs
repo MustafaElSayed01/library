@@ -109,8 +109,8 @@ class TransactionManagement {
         bookManagement.takeBooks(selectedBooks);
     }
     retriveTransaction(transactionId) {
-        const transaction =  transactions.find((transaction) => transaction.orderID === transactionId);
-        const displayTransaction = new DisplayTransaction()
+        const transaction = transactions.find((transaction) => transaction.orderID === transactionId);
+        const displayTransaction = new DisplayTransaction();
         return displayTransaction.retriveTransaction(transaction);
     }
     deleteTransaction(transactionId) {
@@ -121,22 +121,23 @@ class TransactionManagement {
     }
 }
 
-class DisplayTransaction{
-    retriveTransaction(transaction){
-            function printNestedObject(obj, indent = '') {
-                for (let key in obj) {
-                    if (obj.hasOwnProperty(key)) {
-                        if (typeof obj[key] === 'object' && obj[key] !== null) {
-                            console.log(`${indent}${key}:`);
-                            printNestedObject(obj[key], indent + '  ');
-                        } else {
-                            console.log(`${indent}${key}: ${obj[key]}`);
-                        }
-                    }
+class DisplayTransaction {
+    retriveTransaction(transaction) {
+        for (let key in transaction) {
+            if (transaction.hasOwnProperty(key)) {
+                if (typeof transaction[key] === 'object' && transaction[key] !== null) {
+                    console.log(`${indent}${key}:`);
+                    printNestedObject(transaction[key], indent + '  ');
+                } else {
+                    console.log(`${indent}${key}: ${transaction[key]}`);
                 }
             }
-            printNestedObject(transaction)
+        }
     }
+
 }
 
 export default { Transaction, TransactionManagement, DisplayTransaction };
+
+
+// returnable / unreturnable

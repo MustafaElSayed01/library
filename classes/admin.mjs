@@ -5,32 +5,24 @@ import librarianClasses from './librarian.mjs';
 const { Librarian, LibrarianManagement } = librarianClasses;
 import Customer from './customer.mjs';
 
+
 class Admin extends User {
-    constructor(name, password) {
-        super(name, password)
-    }
-    #setName(name) {
-        this.name = name;
-    }
-    #setPassword(password) {
-        this.password = password;
-    }
-    #getName() {    
-        return this.name;
-    }
-    #getPassword() {
-        return this.password;
+    constructor(id, name, password) {
+        super(id, name, password)
+        this.role = 'Admin';
     }
 
-    createLibrarian(id, name, password, salary) {
-        return new Librarian(id, name, password, salary);
+    getRole() {
+        return this.role;
     }
-    editSalary(librarian,newSalary) {
-        librarian.setSalary(newSalary)
-    }
-    createCustomer(id, name, password) {
-        return new Customer(id, name, password);
-    }
+
+    // createLibrarian(id, name, password, salary) {
+    //     return new Librarian(id, name, password, salary);
+    // }
+
+    // createCustomer(id, name, password) {
+    //     return new Customer(id, name, password);
+    // }
 }
 
 class AdminManagement{
@@ -45,21 +37,13 @@ class AdminManagement{
     //     const librarianIndex = users.findIndex((obj) => obj.id === librarian.id);
     //     users.splice(librarianIndex, 1, librarian);
     // }
-
-    insertUser(user) {
-        user.forEach(userObj => {
-            users.push(userObj)
-        });
-    }
-    retriveUser(userd){
-        return users.find((user) => user.id === userd.id )
+    saveUser(user){
+        users.push(user);
     }
 }
 
 class AdminDisplay {
-    // logMessage(message) {
-    //     console.log(message)
-    // }
+
 }
 export default { Admin, AdminManagement, AdminDisplay }
 
