@@ -5,6 +5,10 @@ import { getCurrentDate, getCurrentDateTime, addDaysToDate } from './helpers.js 
 
 class Transaction {
     constructor(librarian, customer, issuedBooks, startDate, days, endDate) {
+        if (this.constructor === Transaction) {
+            throw new Error("Cannot instantiate abstract class Transaction");
+        }
+
         this.orderID = getCurrentDateTime();
         this.librarian = librarian;
         this.customer = customer;
@@ -39,11 +43,11 @@ class Transaction {
         this.customer = customer;
     }
 
-    getissuedBooks() {
+    getIssuedBooks() {
         return this.issuedBooks;
     }
 
-    setissuedBooks(issuedBooks) {
+    setIssuedBooks(issuedBooks) {
         this.issuedBooks = issuedBooks;
     }
 
@@ -88,6 +92,23 @@ class Transaction {
     }
 
     calculatePrice() {
+        throw new Error("Abstract method calculatePrice must be implemented by subclass");
+    }
+}
+
+class CancellableReservation extends Transaction{
+    calculatePrice(){
+        const cancellationFees = 0.10
+        let total = 0;
+        for (let i = 0; i < this.issuedBooks.length; i++) {
+            total += this.issuedBooks[i].price * 0.10 * this.days[i] + ( cancellationFees * this.issuedBooks[i].price );
+        }
+        return parseFloat(total.toFixed(2));
+    }
+}
+
+class UnCancellableReservation extends Transaction{
+    calculatePrice(){
         let total = 0;
         for (let i = 0; i < this.issuedBooks.length; i++) {
             total += this.issuedBooks[i].price * 0.10 * this.days[i];
@@ -97,13 +118,24 @@ class Transaction {
 }
 
 class TransactionManagement {
-    createTransaction(librarianId, customerId, bookId, days) {
+    createCancellableTransaction(librarianId, customerId, bookId, days) {
         const librarian = users.find((librarian) => librarian.id === librarianId);
         const customer = users.find((customer) => customer.id === customerId);
         const selectedBooks = books.filter((book) => bookId.includes(book.id));
         const date = getCurrentDate();
         const dueDate = days.map(day => addDaysToDate(date, day));
-        const transaction = new Transaction(librarian, customer, selectedBooks, date, days, dueDate);
+        const transaction = new CancellableReservation(librarian, customer, selectedBooks, date, days, dueDate);
+        transactions.push(transaction);
+        const bookManagement = new BookManagement();
+        bookManagement.takeBooks(selectedBooks);
+    }
+    createUnCancellableTransaction(librarianId, customerId, bookId, days) {
+        const librarian = users.find((librarian) => librarian.id === librarianId);
+        const customer = users.find((customer) => customer.id === customerId);
+        const selectedBooks = books.filter((book) => bookId.includes(book.id));
+        const date = getCurrentDate();
+        const dueDate = days.map(day => addDaysToDate(date, day));
+        const transaction = new UnCancellableReservation(librarian, customer, selectedBooks, date, days, dueDate);
         transactions.push(transaction);
         const bookManagement = new BookManagement();
         bookManagement.takeBooks(selectedBooks);

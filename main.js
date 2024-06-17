@@ -84,11 +84,12 @@ const book_three = {
     bookManage.addBook(book_three);
 
 const transaction = new TransactionManagement();
-// transaction.createTransaction(1, 4, [1, 2], [3, 3])
+transaction.createCancellableTransaction(1, 4, [1, 2], [3, 3])
+transaction.createUnCancellableTransaction(1, 4, [1, 2], [3, 3])
 
 // console.log(users)
 // console.log(books)
-// console.log(transactions)
+console.log(transactions)
 
-const userMan = new UserManagement();
-userMan.getUsers()
+// const userMan = new UserManagement();
+// userMan.getUsers()
