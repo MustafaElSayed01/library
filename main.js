@@ -1,47 +1,22 @@
-import userClasses from './classes/user.mjs';
-const { User, UserManagement } = userClasses;
-import adminClasses from './classes/admin.mjs';
-const { Admin, AdminManagement, AdminDisplay } = adminClasses;
-import librarianClasses from './classes/librarian.mjs';
-const { Librarian, LibrarianManagement } = librarianClasses;
-import customerClasses from './classes/customer.mjs';
-const { Customer, CustomerManagement } = customerClasses;
-import transactionClasses from './classes/transaction.mjs';
-const { Transaction, TransactionManagement, DisplayTransaction } = transactionClasses;
-import bookClasses from './classes/book.mjs';
-const { Book, BookManagement, DisplayBook } = bookClasses;
+import Admin from './classes/admin.mjs';
+import AdminManagement from './classes/adminManagement.mjs';
+import LibrarianManagement from './classes/librarianManagement.mjs';
+import CustomerManagement from './classes/customerManagement.mjs';
+import TransactionManagement from './classes/transactionManagement.mjs';
+import BookManagement from './classes/bookManagement.mjs';
 import { users, books, transactions } from './database/data.mjs'
 import { getCurrentDateTime } from './classes/helpers.js';
-
-// const admin = new Admin("name","password");
-// // const librarian = admin.createLibrarian(3,"Librarian 3","Password", 40000);
-// // admin.editSalary(librarian, 5000)
-// // console.log(librarian);
-// // const customer = admin.createCustomer("5","Customer 5","Password");
-// // const adminMan = new AdminManagement();
-// // adminMan.insertUser(librarian)
-// // console.log(adminMan.retriveUser(customer))
-
-
-// const tran = new TransactionManagement();
-// // tran.createTransaction(1,3,[2,3],[3,1]);
-// // tran.createTransaction(1,3,[1,3],[3,1]);
-
-// // console.log(transactions)
-// // const customer = new Customer(3,"Customer","password")
-
-
 
 
 const admin = new Admin(0,"admin", "password");
 
 const librarian_one = { id: 1, name: "Librarian 1", password: "Password", salary: 3500 }
-const librarian_two = { id: 2, name: "Librarian 2", password: "Password", salary: 5000 }
-const librarian_three = { id: 3, name: "Librarian 3", password: "Password", salary: 4000 }
+// const librarian_two = { id: 2, name: "Librarian 2", password: "Password", salary: 5000 }
+// const librarian_three = { id: 3, name: "Librarian 3", password: "Password", salary: 4000 }
 
 const customer_one = { id: 4, name: "Customer 1", password: "Password" }
-const customer_two = { id: 5, name: "Customer 2", password: "Password" }
-const customer_three = { id: 6, name: "Customer 3", password: "Password" }
+// const customer_two = { id: 5, name: "Customer 2", password: "Password" }
+// const customer_three = { id: 6, name: "Customer 3", password: "Password" }
 
 const adminManagement = new AdminManagement();
 adminManagement.saveUser(admin);
@@ -52,7 +27,9 @@ libMan.createLibrarian(admin,librarian_one);
 
 const cusMang = new CustomerManagement();
 cusMang.createCustomer(admin, customer_one);
-cusMang.createCustomer(admin, customer_two);
+// cusMang.createCustomer(admin, customer_two);
+
+console.log(users)
 
 const bookManage = new BookManagement();
 const book_one = {
@@ -93,3 +70,4 @@ console.log(transactions)
 
 // const userMan = new UserManagement();
 // userMan.getUsers()
+
